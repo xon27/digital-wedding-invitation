@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation – Product Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+      background-color: #e8ebef;
+      background-image:
+        radial-gradient(ellipse 100% 70% at 50% 110%, rgba(255,255,255,0.7) 0%, transparent 55%),
+        radial-gradient(ellipse 85% 55% at 15% 15%, rgba(255,255,255,0.9) 0%, transparent 50%),
+        radial-gradient(ellipse 75% 50% at 85% 25%, rgba(255,255,255,0.75) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 5% 70%, rgba(230,234,239,0.95) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 35% at 95% 80%, rgba(232,235,240,0.9) 0%, transparent 55%),
+        linear-gradient(165deg, #f2f4f7 0%, #eaeef2 40%, #e2e6eb 100%);
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      color: #1a1d21;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    /* Subtle dot pattern overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at center, rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Soft vignette – darker edges */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 75% 65% at 50% 50%, transparent 35%, rgba(0,0,0,0.06) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .studio {
+      position: relative;
+      z-index: 1;
+      perspective: 1600px;
+      padding: 80px 40px 100px;
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Visible stage surface – background clearly seen behind devices */
+    .studio::before {
+      content: '';
+      position: absolute;
+      inset: -60px -80px -80px;
+      background: linear-gradient(175deg, rgba(255,255,255,0.4) 0%, rgba(245,247,250,0.5) 30%, rgba(235,238,243,0.6) 100%);
+      border-radius: 280px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .stage {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 64px;
+      transform-style: preserve-3d;
+      transition: gap 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Soft floor shadow (ambient) */
+    .stage::before {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 900px;
+      height: 80px;
+      background: radial-gradient(ellipse 100% 30% at 50% 0%, rgba(0,0,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ----- Laptop: sleek 3D, tilted back ----- */
+    .device--laptop {
+      --screen-w: 920px;
+      --screen-h: 576px;
+      --bezel-t: 8px;
+      --bezel-s: 8px;
+      --bezel-b: 8px;
+      --base-h: 18px;
+      --hinge: 4px;
+      position: relative;
+      transform: rotateX(10deg) rotateY(-2deg);
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .device--laptop .device-frame {
+      width: calc(var(--screen-w) + var(--bezel-s) * 2);
+      padding: var(--bezel-t) var(--bezel-s) var(--bezel-b);
+      background: linear-gradient(178deg, #f0f1f2 0%, #e2e4e5 8%, #d0d3d4 25%, #b8bcbe 60%, #a4a8ab 100%);
+      border-radius: 14px 14px 6px 6px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.9),
+        0 1px 0 rgba(255,255,255,0.6),
+        0 4px 0 rgba(0,0,0,0.02),
+        0 20px 60px rgba(0,0,0,0.08),
+        0 50px 120px rgba(0,0,0,0.05);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .device--laptop .device-screen {
+      width: var(--screen-w);
+      height: var(--screen-h);
+      background: #000;
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.25);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.06),
+        inset 0 2px 4px rgba(0,0,0,0.15);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Glass reflection on screen */
+    .device--laptop .device-screen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      top: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 6px 6px 0 0;
+    }
+    .device--laptop .device-screen::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background: #0a0a0a;
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: inset 0 0 0 1px #333;
+    }
+    .device--laptop .device-screen iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .device--laptop .device-hinge {
+      height: var(--hinge);
+      margin: 0 calc(-1 * var(--bezel-s));
+      background: linear-gradient(180deg, #4a4d4e 0%, #2d3032 100%);
+      border-radius: 0 0 2px 2px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .device--laptop .device-base {
+      height: var(--base-h);
+      background: linear-gradient(180deg, #d4d6d8 0%, #b8bcbe 25%, #9ca0a4 70%, #888c90 100%);
+      border-radius: 0 0 16px 16px;
+      margin: 0 -1px -1px;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .device--laptop .device-base::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 4px;
+      background: #1c1e20;
+      border-radius: 2px;
+    }
+    /* Contact shadow under laptop */
+    .device--laptop::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      height: 24px;
+      background: radial-gradient(ellipse 100% 50% at 50% 0%, rgba(0,0,0,0.12) 0%, transparent 75%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    /* ----- Smartphone: side by side with laptop, slight angle ----- */
+    .device--mobile {
+      --screen-w: 375px;
+      --screen-h: 667px;
+      --bezel: 10px;
+      --island-w: 112px;
+      --island-h: 30px;
+      position: relative;
+      transform: rotateY(-8deg) rotateX(4deg);
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .device--mobile .device-frame {
+      width: calc(var(--screen-w) + var(--bezel) * 2);
+      padding: var(--bezel);
+      position: relative;
+      background: linear-gradient(165deg, #2c2e30 0%, #1e2022 40%, #121416 100%);
+      border-radius: 44px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 0 0 2px rgba(0,0,0,0.15),
+        0 4px 0 rgba(0,0,0,0.1),
+        0 16px 48px rgba(0,0,0,0.12),
+        0 40px 80px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .device--mobile .device-screen {
+      width: var(--screen-w);
+      height: var(--screen-h);
+      background: #000;
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.4);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        inset 0 2px 8px rgba(0,0,0,0.2);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Glass reflection on phone screen */
+    .device--mobile .device-screen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      left: 0;
+      width: 35%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 36px;
+    }
+    .device--mobile .device-screen::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--island-w);
+      height: var(--island-h);
+      background: #000;
+      border-radius: 999px;
+      z-index: 2;
+      box-shadow: inset 0 0 0 1px #222;
+    }
+    .device--mobile .device-frame::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 120px;
+      width: 2px;
+      height: 22px;
+      background: #0a0c0e;
+      border-radius: 1px;
+      box-shadow: inset 0 0 0 1px #1a1c1e;
+    }
+    .device--mobile .device-screen iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    /* Contact shadow under phone */
+    .device--mobile::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 20px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,0,0,0.15) 0%, transparent 70%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    @media (max-width: 1100px) {
+      .device--laptop { --screen-w: 760px; --screen-h: 475px; transform: rotateX(8deg); }
+      .device--mobile { transform: rotateY(-6deg) rotateX(4deg); }
+      .stage { gap: 48px; }
+    }
+    @media (max-width: 880px) {
+      .device--laptop { --screen-w: 640px; --screen-h: 400px; }
+      .stage { flex-wrap: wrap; align-items: flex-end; gap: 56px; }
+    }
+    @media (max-width: 720px) {
+      .studio { padding: 48px 20px 72px; }
+      .device--laptop { --screen-w: 100%; --screen-h: 360px; --bezel-s: 6px; --bezel-t: 6px; transform: rotateX(6deg); }
+      .device--laptop .device-frame { max-width: 100%; }
+      .device--mobile { --screen-w: 320px; --screen-h: 568px; --bezel: 8px; --island-w: 94px; --island-h: 24px; transform: rotateY(-4deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="studio">
+    <div class="stage">
+      <div class="device device--laptop">
+        <div class="device-frame">
+          <div class="device-screen">
+            <iframe id="laptop-iframe" title="Laptop – Homepage" src="./#/"></iframe>
+          </div>
+          <div class="device-hinge"></div>
+          <div class="device-base"></div>
+        </div>
+      </div>
+      <div class="device device--mobile">
+        <div class="device-frame">
+          <div class="device-screen">
+            <iframe id="mobile-iframe" title="Mobile – Responsive view" src="./#/"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
