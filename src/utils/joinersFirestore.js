@@ -1,7 +1,7 @@
 import { getSentJoiners, setSentJoiners, getRemovedIds, setRemovedIds } from './storage';
 
-/** Static data folder – same as birthday invitation: single JSON file, name + lastname only */
-const DATA_JOINERS_URL = '/data/joiners.json';
+/** Static data – respects Vite base (GitHub Pages subpath). */
+const DATA_JOINERS_URL = `${import.meta.env.BASE_URL}data/joiners.json`;
 
 /** URL for saving RSVPs to server (Hostinger PHP appends to data/joiners.json) */
 function getSaveRsvpUrl() {
@@ -56,7 +56,6 @@ export async function addJoinersToList(joiners) {
   if (!joiners || joiners.length === 0) return;
   const existing = getSentJoiners();
   setSentJoiners(existing.concat(joiners));
-  // Also send to server so data/joiners.json is updated on Hostinger
   await saveJoinersToServer(joiners);
 }
 
