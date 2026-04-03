@@ -28,7 +28,6 @@ jobs:
       - name: Build (base path for project Pages URL)
         run: npm run build
         env:
-          # https://<user>.github.io/<repo>/ — must match repo name
           GITHUB_REPO_BASE: /${{ github.event.repository.name }}/
       - uses: actions/upload-pages-artifact@v3
         with:
