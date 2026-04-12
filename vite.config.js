@@ -6,6 +6,6 @@ const rawBase = process.env.GITHUB_REPO_BASE || "/";
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 
 export default defineConfig({
+  base: "/wd-invi/",
   plugins: [react()],
-  base,
 });
