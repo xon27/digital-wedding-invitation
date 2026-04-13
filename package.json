@@ -8,7 +8,7 @@
     "dev": "node node_modules/vite/bin/vite.js",
     "build": "node node_modules/vite/bin/vite.js build",
     "preview": "node node_modules/vite/bin/vite.js preview",
-    "deploy":  "npm run build && gh-pages -d dist"
+    "deploy":  "npm run build && gh-pages -d dist -f"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
