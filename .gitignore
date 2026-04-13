@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local env (secrets)
+.env
+.env.local
+.env.*.local
+
+# Logs and caches
+*.log
+npm-debug.log*
+.vite/
+.cache/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# Nested clone / duplicate folder (do not commit)
+digital-wedding-invitation/

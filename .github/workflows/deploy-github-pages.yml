@@ -1,0 +1,44 @@
+# Builds Vite dist/ and pushes it to branch "gh-pages".
+# GitHub then serves THAT folder — not the repo root (which has dev index.html).
+#
+# After the first successful run:
+#   Repo → Settings → Pages → Build and deployment
+#   → Source: "Deploy from a branch"
+#   → Branch: gh-pages  /  Folder: / (root)
+#   → Save
+#
+# Site: https://<user>.github.io/<repo>/#/
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build (asset paths for /repo-name/)
+        run: npm run build
+        env:
+          GITHUB_REPO_BASE: /${{ github.event.repository.name }}/
+
+      - name: Push dist to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
